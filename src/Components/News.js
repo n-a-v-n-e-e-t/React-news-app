@@ -3,6 +3,7 @@ import Newsitem from './Newsitem';
 import Spinner from './Spinner';
 
 export class News extends Component {
+ 
   constructor(){
       super();
       this.state = {
@@ -17,7 +18,7 @@ export class News extends Component {
     
     if( Math.ceil(this.state.totalResults/9 > this.state.page)){
         this.setState({loading:true})
-        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=299c6850d4e94ac88e016d957f1016e2&pageSize=9&page=${this.state.page+1}`
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=299c6850d4e94ac88e016d957f1016e2&pageSize=${this.props.pageSize}&page=${this.state.page+1}`
         const data = await fetch(url);
         const parsedData = await data.json();
         this.setState({
@@ -31,7 +32,7 @@ export class News extends Component {
   handlePrev = async () =>{
       if(this.state.page>1){
         this.setState({loading:true})  
-        const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=299c6850d4e94ac88e016d957f1016e2&pageSize=9&page=${this.state.page-1}`
+        const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=299c6850d4e94ac88e016d957f1016e2&pageSize=${this.props.pageSize}&page=${this.state.page-1}`
         const data = await fetch(url);
         const parsedData = await data.json();
         this.setState({articles:parsedData.articles , page:this.state.page-1,
@@ -42,7 +43,7 @@ export class News extends Component {
 
   async componentDidMount(){
       this.setState({loading:true})
-      const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=299c6850d4e94ac88e016d957f1016e2&pageSize=9&page=${this.state.page}`
+      const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=299c6850d4e94ac88e016d957f1016e2&pageSize=${this.props.pageSize}&page=${this.state.page}`
       const data = await fetch(url);
       const parsedData = await data.json();
       this.setState({articles:parsedData.articles , 
@@ -56,8 +57,9 @@ export class News extends Component {
         {this.state.loading && <Spinner />}
         <div className="row">
             { !this.state.loading && this.state.articles.map(({title,description,url,urlToImage})=>{
-                return <div className="col-lg-4 d-flex align-items-stretch">
-                     <Newsitem title={title} desc={description} imageUrl={urlToImage} newsUrl = {url}/>
+            
+                return <div className="col-lg-4 d-flex align-items-stretch" key={url}>
+                     <Newsitem title={title} desc={description} imageUrl={urlToImage} newsUrl = {url} />
                 </div>
             })}
         </div>
