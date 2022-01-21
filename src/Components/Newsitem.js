@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 
+
+
 export class Newsitem extends Component {
-   render(){
+    imagebackup = "https://e7.pngegg.com/pngimages/911/883/png-clipart-free-newspaper-headline-others-love-logo.png";
+    render(){
         let { title , desc , imageUrl , newsUrl} = this.props;
-       return <div className="card" style={{width: "18rem"}}>
-       <img src={imageUrl} className="card-img-top" alt="..." />
-       <div className="card-body my-5">
-           <h5 className="card-title">{title}</h5>
+       return <div className="card my-2" >
+       <img src={imageUrl || this.imagebackup} style={{width: "100%",height:"15vw",objectFit:"cover"}}/>
+       <div className="card-body" style={{position:"relative"}}>
+           <h5 className="card-title"> <a target="_blank" rel="noreferrer" href={newsUrl} className="link-dark text-decoration-none"> {title} </a> </h5>
            <p className="card-text">{desc}</p>
-           <a href={newsUrl} target="_blank" className="btn btn-sm btn-primary">Read More !</a>
        </div>
    </div> 
    }
@@ -18,6 +20,17 @@ export default Newsitem;
 
 
 /*
+
+position: absolute;
+right:    0;
+bottom:   0;
+    className="card-img-top"
+    .card-img-top {
+    width: 100%;
+    height: 15vw;
+    object-fit: cover;
+}
+
      render() {
         return <div className='container'> 
             This is a news Component 
