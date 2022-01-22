@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 export class Newsitem extends Component {
     imagebackup = "https://e7.pngegg.com/pngimages/911/883/png-clipart-free-newspaper-headline-others-love-logo.png";
     render(){
+        console.log('render of news-item-called');
         let { title , desc , imageUrl , newsUrl} = this.props;
        return <div className="card my-2" >
        <img src={imageUrl || this.imagebackup} style={{width: "100%",height:"15vw",objectFit:"cover"}}/>
